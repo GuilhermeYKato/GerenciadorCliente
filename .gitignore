@@ -1,0 +1,8 @@
+*.log
+logs/
+node_modules/
+.vscode/
+.idea/
+.env
+.venv/
+__pycache__/

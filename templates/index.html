@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link href="../src/css/output.css" rel="stylesheet"> -->
+
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- scripts -->
+
+    <!-- AlphineJS -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <!-- Table/page test -->
+    <script defer>
+        function CreateClient() {
+
+            return {
+                list_clients: [],
+                numClintes: 1000,
+
+                createData() {
+                    let list = [];
+
+                    for (let i = 0; i < this.numClintes; i++) {
+                        list.push({
+                            codigo: 1000 + i,
+                            nome: "Cliente " + (i + 1),
+                            documento: "00.000.000/0000-" + i,
+                            email: "cliente" + (i + 1) + "@gmail.com",
+                            telefone: "(18)90000-00" + (i % 100)
+                        });
+                    }
+                    this.list_clients = list;
+                },
+
+                init() {
+                    this.createData();
+                },
+
+                page: 1,
+                ClientPerPage: 8,
+
+                get totalPages() {
+                    return Math.ceil(this.list_clients.length / this.ClientPerPage);
+                },
+
+                get pagination() {
+                    const total = this.totalPages;
+                    const current = this.page;
+                    const num_neighbor = 1;
+                    let pages = [];
+
+                    // Menos que sete paginas, mostra tudo
+                    if (total <= 7) {
+                        let pages = [];
+                        for (let i = 1; i <= total; i++) {
+                            pages.push(i);
+                        }
+
+                        return pages;
+                    }
+
+                    // add primeira pagina
+                    pages.push(1);
+
+                    // Minimos e maximos de paginas
+                    let start = Math.max(2, current - num_neighbor);
+                    let end = Math.min(total - 1, current + num_neighbor);
+
+                    if (current <= 3) end = 4;
+                    if (current >= total - 2) start = total - 3;
+
+                    for (let i = start; i <= end; i++) {
+                        pages.push(i);
+                    }
+
+                    pages.push(total);
+
+                    return pages;
+                },
+
+                get ClientPages() {
+                    const clients = (this.page - 1) * this.ClientPerPage;
+                    return this.list_clients.slice(clients, clients + this.ClientPerPage);
+                },
+
+                nextPage() {
+                    if (this.page < this.totalPages) this.page++;
+                },
+
+                prevPage() {
+                    if (this.page > 1) this.page--;
+                },
+
+                gotoPage(n) {
+                    this.page = n;
+                }
+            }
+        }
+    </script>
+
+    <!-- scripts END-->
+</head>
+
+<body class="bg-bgborder h-screen flex flex-col">
+    <!-- border -->
+    <div class="m-2 flex flex-col h-full">
+
+        <!-- Nav Bar -->
+        <nav class="bg-navbar shadow-gray-900 shadow-md z-1 p-2 border-b border-bg1 rounded-t-md">
+            <div class="max-w-8/10 mx-auto flex justify-between items-center">
+
+                <!-- Menu / UseCloud / Icon -->
+                <div class="flex items-center gap-4">
+                    <!-- Menu -->
+                    <button class="text-roxo hover:text-white text-2xl">☰</button>
+
+                    <!-- Name/Icon -->
+                    <span class="font-bold text-2xl text-roxo">UseCloud <span
+                            class="relative -top-1 bg-white text-[11px] px-2 py-0.5 rounded">ERP</span>
+                </div>
+
+                <!-- Dropdown -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Database -->
+                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis">
+                        <option>Dev Cloud</option>
+                        <option>Produção</option>
+                    </select>
+
+                    <!-- Nome Empresa -->
+                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis uppercase">
+                        <option>Empresa Exemplo 1</option>
+                        <option>Empresa Exemplo 2</option>
+                        <option>Empresa Exemplo 3</option>
+                    </select>
+                </div>
+                <!-- Dropdown END-->
+
+                <!-- Right profile menu -->
+                <div class="relative group">
+                    <button class="flex items-center gap-2 hover:opacity-80">
+                        <img src="../src/icons/user.png" class="w-10 h-10 rounded-full border border-roxo" />
+                        <div class="text-left text-sm">
+                            <p class="text-gray-300 font-semibold">Olá, Usuário.</p>
+                            <p class="text-gray-300 text-xs">Desenvolvedor</p>
+                        </div>
+                    </button>
+
+
+                    <!-- Dropdown -->
+                    <div class="absolute rounded-md bg-gray-300 group-hover:opacity-100  hidden group-hover:block">
+                        <ul class="py-2 text-sm">
+                            <li><a href="#" class="block px-4 py-2 hover:text-roxo">Meu Perfil</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:text-roxo">Configurações</a></li>
+                            <li><a href="#" class="block px-4 py-2 text-red-400 hover:text-red-900 ">Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+        <!-- Nav Bar END-->
+
+        <!-- Main Component-->
+        <div class="bg-bg2 flex-1 rounded-b-md">
+            <div class="max-w-8/10 mx-auto">
+
+                <div x-data="{ state: 'list' }" class="p-2">
+
+                    <!-- State 1: Lista de Clientes -->
+                    <div x-show="state === 'list'" class="mt-8">
+                        <div class="mb-6">
+                            <i class="fa-solid fa-users text-roxo text-2xl"></i>
+                            <h1 class="text-3xl font-bold inline-block ml-2 text-white">Gerenciamento de Clientes</h1>
+                        </div>
+
+                        <div class="w-full flex items-end mt-8 mb-8">
+
+                            <div class="flex gap-4">
+
+                                <div class="flex flex-col">
+                                    <label class="text-xs text-gray-300 font-bold mb-2">Tipo</label>
+                                    <select class="bg-bg1 text-gray-300 rounded-md p-2.5 w-32">
+                                        <option>Contendo</option>
+                                        <option>Igual</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <label class="text-xs text-gray-300 font-bold mb-2">Contendo</label>
+                                    <input type="text" placeholder="DIGITE O TEXTO A SER PESQUISADO"
+                                        class="bg-bg1 text-gray-300 rounded-md p-2.5 w-80 placeholder-gray-500 uppercase">
+                                </div>
+                            </div>
+                            <div class="ml-auto">
+
+                                <!-- Button Novo Cliente -->
+                                <button @click="state = 'new'"
+                                    class="group bg-roxo w-10 h-10 text-gray-300 rounded-full flex hover:w-36 transition-all duration-300 items-center overflow-hidden shadow-lg">
+                                    <span class="text-2xl flex items-center justify-center w-10 h-10 pb-1.5">
+                                        +
+                                    </span>
+                                    <span
+                                        class="opacity-0 group-hover:opacity-100 max-w-0 group-hover:max-w-xs transition-all duration-300 overflow-hidden whitespace-nowrap">
+                                        Novo Cliente
+                                    </span>
+                                </button>
+                                <!-- Button Novo Cliente END-->
+                            </div>
+
+                        </div>
+
+                        <!-- Tabela Dados-->
+                        <div x-data="CreateClient()" class="mt-8">
+
+                            <!-- Tabela -->
+                            <div class="bg-bg1 rounded-xl shadow-lg overflow-hidden">
+                                <table class="w-full text-left table-fixed rounded-xl ">
+                                    <tbody class="text-xs text-gray-300  bg-navbar">
+                                        <tr class="uppercase border-2 border-bg1 ">
+                                            <th class="p-4 font-semibold w-8/100 rounded-tl-xl">Código</th>
+                                            <th class="p-4 font-semibold w-35/100">Nome</th>
+                                            <th class="p-4 font-semibold w-15/100">CPF/CNPJ</th>
+                                            <th class="p-4 font-semibold w-23/100">Email</th>
+                                            <th class="p-4 font-semibold w-10/100">Telefone</th>
+                                            <th class="p-4 font-semibold text-center w-9/100 rounded-tr-xl">Ações</th>
+                                        </tr>
+                                    </tbody>
+
+                                    <tbody class="text-md text-gray-300">
+                                        <template x-for="list_clients in ClientPages" :key="list_clients.codigo">
+                                            <tr class="hover:bg-bgborder ">
+                                                <td class="p-4 truncate font-semibold" x-text="list_clients.codigo">
+                                                </td>
+                                                <td class="p-4 truncate uppercase font-semibold"
+                                                    x-text="list_clients.nome"></td>
+                                                <td class="p-4 truncate font-semibold" x-text="list_clients.documento">
+                                                </td>
+                                                <td class="p-4 truncate font-semibold" x-text="list_clients.email"></td>
+                                                <td class="p-4 truncate font-semibold" x-text="list_clients.telefone">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button
+                                                        class="bg-roxo text-[16px] font-semibold px-2 py-0.5 rounded-sm hover:bg-gray-500">
+                                                        Visualizar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Tabela END-->
+
+                            <!-- paginação -->
+                            <div class="flex justify-end mt-4 gap-2 font-semibold">
+
+                                <button @click="prevPage" :disabled="page === 1"
+                                    class="text-md px-3 h-8 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50">
+                                    Anterior
+                                </button>
+
+                                <template x-for="(item, index) in pagination" :key="index">
+
+
+                                    <button @click="gotoPage(item)"
+                                        class="text-md w-8 h-8 rounded flex items-center justify-center"
+                                        :class="page === item ? 'bg-roxo text-gray-300 shadow-lg' : 'bg-bg1 text-gray-300 hover:bg-gray-600'">
+                                        <span x-text="item"></span>
+                                    </button>
+
+
+                                </template>
+
+                                <button @click="nextPage" :disabled="page === totalPages"
+                                    class="text-md px-3 h-8 rounded bg-bg1 text-gray-300 hover:bg-gray-600 disabled:opacity-50">
+                                    Próxima
+                                </button>
+
+                            </div>
+                            <!-- paginação END-->
+                        </div>
+                        <!-- Tabela Dados END-->
+
+                    </div>
+
+                    <!-- State 2: Novo Cliente -->
+                    <div x-show="state === 'new'" class="mt-6">
+
+                        <button @click="state = 'list'" class="text-gray-600 underline mb-4">
+                            ← Voltar
+                        </button>
+                    </div>
+                    <!-- State 2: Novo Cliente END-->
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- Main Component END-->
+
+    </div>
+    <!-- border END-->
+</body>
+
+</html>
