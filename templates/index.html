@@ -7,6 +7,8 @@
     <!--<link href="../src/css/output.css" rel="stylesheet"> -->
 
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+
+    <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- scripts -->
@@ -20,25 +22,101 @@
 
             return {
                 list_clients: [],
+                list_empresas_select: [],
+                selected_empresa: '',
                 numClintes: 1000,
                 showContactModal: false,
-                createData() {
-                    let list = [];
+                state: 'list',
+                searchType: 'contendo',
+                searchText: '',
 
-                    for (let i = 0; i < this.numClintes; i++) {
-                        list.push({
-                            codigo: 1000 + i,
-                            nome: "Cliente " + (i + 1),
-                            documento: "00.000.000/0000-" + i,
-                            email: "cliente" + (i + 1) + "@gmail.com",
-                            telefone: "(18)90000-00" + (i % 100)
-                        });
-                    }
-                    this.list_clients = list;
+                form: {
+                    codigo: '',
+                    tipo_pessoa: 'J',
+                    tipo_operacao: '',
+                    cpf_cnpj: '',
+                    inscricao_estadual: '',
+                    razao_social: '',
+                    nome_fantasia: '',
+                    telefone: '',
+                    fax: '',
+                    regiao: '',
+                    email_nfe: ''
                 },
 
                 init() {
-                    this.createData();
+                    this.getData();
+                    this.getEmpresasSelect();
+                },
+
+                async getData() {
+
+                    let url = new URL('/api/clientes', window.location.origin);
+
+                    if (this.searchText) {
+                        url.searchParams.append('search', this.searchText);
+                        url.searchParams.append('type', this.searchType);
+                    }
+
+                    try {
+                        const response = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        this.list_clients = await response.json();
+                    } catch (error) {
+                        console.error("Erro:", error);
+                    }
+                },
+
+                async getEmpresasSelect() {
+                    try {
+                        const response = await fetch('/api/empresas-select');
+                        this.list_empresas_select = await response.json();
+                    } catch (error) {
+                        console.error('Erro ao carregar lista de empresas:', error);
+                    }
+                },
+
+                async saveData() {
+                    if (!this.form.codigo || !this.form.razao_social || !this.form.cpf_cnpj) {
+                        alert("Preencha o Código, Razão Social e CNPJ/CPF!");
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/clientes', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(this.form)
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            alert('Cliente salvo com sucesso!');
+                            this.getData();
+                            this.clearForm();
+                            this.state = 'list';
+                        } else {
+                            alert('Erro: ' + result.message);
+                        }
+                    } catch (error) {
+                        console.error('Erro na requisição:', error);
+                        alert('Erro ao conectar com o servidor.');
+                    }
+                },
+
+                clearForm() {
+                    this.form = {
+                        codigo: '', tipo_pessoa: 'J', tipo_operacao: '',
+                        cpf_cnpj: '', inscricao_estadual: '', razao_social: '',
+                        nome_fantasia: '', telefone: '', fax: '', regiao: '', email_nfe: ''
+                    };
                 },
 
                 page: 1,
@@ -108,7 +186,7 @@
 
 <body class="bg-bgborder h-screen flex flex-col">
     <!-- border -->
-    <div class="m-2 flex flex-col h-full">
+    <div x-data="CreateClient()" class="m-2 flex flex-col h-full">
 
         <!-- Nav Bar -->
         <nav class="bg-navbar shadow-gray-900 shadow-md z-10 p-2 border-b border-bg1 rounded-t-md">
@@ -136,11 +214,15 @@
                     </select>
 
                     <!-- Nome Empresa -->
-                    <select
+                    <select x-model="selected_empresa"
                         class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase cursor-pointer">
-                        <option>Empresa Exemplo 1</option>
-                        <option>Empresa Exemplo 2</option>
-                        <option>Empresa Exemplo 3</option>
+
+                        <option value="" hidden>Escolha uma empresa...</option>
+
+                        <template x-for="empresa in list_empresas_select" :key="empresa.id">
+                            <option :value="empresa.id" x-text="empresa.razao_social"></option>
+                        </template>
+
                     </select>
                 </div>
                 <!-- Dropdown END-->
@@ -176,7 +258,7 @@
         <!-- Nav Bar END-->
 
         <!-- Main Component-->
-        <div x-data="CreateClient()" class="bg-bg2 flex-1 rounded-b-md">
+        <div class="bg-bg2 flex-1 rounded-b-md">
             <!-- Main Component max-w-80% -->
             <div class="max-w-4/5 mx-auto">
                 <!-- States -->
@@ -195,15 +277,17 @@
 
                                 <div class="flex flex-col">
                                     <label class="text-xs text-gray-300 font-bold mb-2">Tipo</label>
-                                    <select class="bg-bg1 text-gray-300 rounded-md p-2.5 w-32">
-                                        <option>Contendo</option>
-                                        <option>Igual</option>
+                                    <select x-model="searchType" @change="getData()"
+                                        class="bg-bg1 text-gray-300 rounded-md p-2.5 w-32">
+                                        <option value="contendo">Contendo</option>
+                                        <option value="igual">Igual</option>
                                     </select>
                                 </div>
 
                                 <div class="flex flex-col">
                                     <label class="text-xs text-gray-300 font-bold mb-2">Contendo</label>
-                                    <input type="text" placeholder="DIGITE O TEXTO A SER PESQUISADO"
+                                    <input type="text" x-model="searchText" @input.debounce.300ms="getData()"
+                                        placeholder="DIGITE O TEXTO A SER PESQUISADO"
                                         class="bg-bg1 text-gray-300 rounded-md p-2.5 w-80 placeholder-gray-500 uppercase">
                                 </div>
                             </div>
@@ -237,24 +321,24 @@
                                             <th class="p-4 font-semibold w-[35%]">Nome</th>
                                             <th class="p-4 font-semibold w-[15%]">CPF/CNPJ</th>
                                             <th class="p-4 font-semibold w-[20%]">Email</th>
-                                            <th class="p-4 font-semibold w-[10%]">Telefone</th>
-                                            <th class="p-4 font-semibold text-center w-[10%] rounded-tr-xl">Ações</th>
+                                            <th class="p-4 font-semibold w-[12%]">Telefone</th>
+                                            <th class="p-4 font-semibold text-center w-[8%] rounded-tr-xl">Ações</th>
                                         </tr>
                                     </tbody>
 
                                     <tbody class="text-md text-gray-300">
-                                        <template x-for="client in ClientPages" :key="client.codigo">
+                                        <template x-for="client in ClientPages" :key="client.id">
                                             <tr class="hover:bg-bgborder ">
                                                 <td class="p-4 truncate font-semibold" x-text="client.codigo">
                                                 </td>
                                                 <td
                                                     class="p-4 truncate uppercase font-semibold flex items-center gap-2">
                                                     <i class="fa-regular fa-circle-user text-roxo text-md"></i>
-                                                    <span x-text="client.nome"></span>
+                                                    <span x-text="client.razao_social"></span>
                                                 </td>
-                                                <td class="p-4 truncate font-semibold" x-text="client.documento">
+                                                <td class="p-4 truncate font-semibold" x-text="client.cpf_cnpj">
                                                 </td>
-                                                <td class="p-4 truncate font-semibold" x-text="client.email"></td>
+                                                <td class="p-4 truncate font-semibold" x-text="client.email_nfe"></td>
                                                 <td class="p-4 truncate font-semibold" x-text="client.telefone">
                                                 </td>
                                                 <td class="text-center">
@@ -337,15 +421,15 @@
 
                                 <div class="lg:col-span-1">
                                     <label class="label-padrao">Código</label>
-                                    <input type="text" value="108384" readonly class="input-readonly">
+                                    <input type="text" x-model="form.codigo" class="input-padrao">
                                 </div>
 
                                 <div class="lg:col-span-2">
                                     <label class="label-padrao">Pessoa</label>
                                     <div class="relative">
-                                        <select class="input-padrao cursor-pointer">
-                                            <option>Jurídica</option>
-                                            <option>Física</option>
+                                        <select x-model="form.tipo_pessoa" class="input-padrao cursor-pointer">
+                                            <option value="J">Jurídica</option>
+                                            <option value="F">Física</option>
                                         </select>
                                         <div class="angle-down">
                                             <i class="fa-solid fa-angle-down text-xs"></i>
@@ -356,9 +440,9 @@
                                 <div class="lg:col-span-3">
                                     <label class="label-padrao">Tipo</label>
                                     <div class="relative">
-                                        <select class="input-padrao cursor-pointer">
-                                            <option>VENDAS</option>
-                                            <option>SERVIÇOS</option>
+                                        <select x-model="form.tipo_operacao" class="input-padrao cursor-pointer">
+                                            <option value="VENDA">VENDAS</option>
+                                            <option value="SERVICO">SERVIÇOS</option>
                                         </select>
                                         <div class="angle-down">
                                             <i class="fa-solid fa-angle-down text-xs"></i>
@@ -370,7 +454,7 @@
                                 <div class="lg:col-span-2">
                                     <label class="label-padrao">CNPJ</label>
                                     <div class="relative">
-                                        <input type="text" value="42.506.289/0001-65" class="input-padrao pr-8">
+                                        <input type="text" x-model="form.cpf_cnpj" class="input-padrao pr-8">
                                         <i class="fa-solid fa-magnifying-glass text-roxo absolute right-3 top-2.5"></i>
                                     </div>
                                 </div>
@@ -382,18 +466,17 @@
 
                                 <div class="lg:col-span-2">
                                     <label class="label-padrao">Inscrição Estadual</label>
-                                    <input type="text" value="9089827202" class="input-padrao">
+                                    <input type="text" x-model="form.inscricao_estadual" class="input-padrao">
                                 </div>
 
                                 <div class="lg:col-span-6">
                                     <label class="label-padrao">Razão Social</label>
-                                    <input type="text" value="MARCELO DE OLIVEIRA SANTOS SOFTWARE LTDA"
-                                        class="input-padrao uppercase">
+                                    <input type="text" x-model="form.razao_social" class="input-padrao uppercase">
                                 </div>
 
                                 <div class="lg:col-span-6">
                                     <label class="label-padrao">Nome Fantasia</label>
-                                    <input type="text" value="USE SISTEMAS" class="input-padrao uppercase">
+                                    <input type="text" x-model="form.nome_fantasia" class="input-padrao uppercase">
                                 </div>
 
                             </div>
@@ -417,7 +500,7 @@
 
                                     <div class="col-span-12 lg:col-span-4">
                                         <label class="label-padrao">Telefone</label>
-                                        <input type="text" value="(43)9955-2100" class="input-padrao">
+                                        <input type="text" x-model="form.telefone" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-4">
@@ -444,7 +527,7 @@
                                     <div class="col-span-12">
                                         <label class="label-padrao">E-mail
                                             NFE/Boletos</label>
-                                        <input type="text" value="comercial@usesistemas.com.br" class="input-padrao">
+                                        <input type="text" x-model="form.email_nfe" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-6">
@@ -680,7 +763,7 @@
                         </div>
                         <!-- Modal -->
                         <div x-show="showContactModal" x-transition.opacity
-                            class="fixed inset-0 bg-gray-600/60 backdrop-blur flex items-center justify-center z-2">
+                            class="fixed inset-0 bg-gray-600/60 backdrop-blur flex items-center justify-center z-20">
 
                             <!-- Modal true -->
                             <div @click.outside="showContactModal = false"
@@ -765,6 +848,22 @@
                             <!-- Modal true END-->
                         </div>
                         <!-- Modal END-->
+
+                        <div class="border-t border-bg1 my-8 shadow-md"></div>
+
+                        <div class="flex justify-end mb-8">
+                            <button @click="saveData()"
+                                class="bg-roxo hover:bg-gray-600 text-white px-4 py-2 rounded shadow flex items-center gap-2 cursor-pointer ml-2">
+                                <i class="fa-solid fa-save"></i> Salvar Cliente
+                            </button>
+
+                            <button @click="clearForm()"
+                                class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow flex items-center gap-2 cursor-pointer ml-2">
+                                <i class="fa-solid fa-eraser"></i> Limpar
+                            </button>
+                        </div>
+
+
                     </div>
                     <!-- State 2: Novo Cliente END-->
                 </div>

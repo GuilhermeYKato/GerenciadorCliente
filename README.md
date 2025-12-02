@@ -45,7 +45,23 @@ npm install
 
 3. Se tudo instalou corretamente, você esta pronto para compilar o projeto
 
+# Configurando o postgreSQL
+
+1. Baixe e instale o `postgreSQL` através do site oficial
+
 # Compilar o projeto
+
+Crie o arquivo `.env` com suas informações
+
+Rode `db_setup.py` para criar o banco de dados
+```bash
+python db_setup.py
+```
+
+Rode `seed_db.py` caso queira gerar dados aleatorios
+```bash
+python seed_db.py
+```
 
 Com todas as dependências instaladas, compile e execute o arquivo `app.py` utilizando o comando abaixo:
 
@@ -53,7 +69,7 @@ Com todas as dependências instaladas, compile e execute o arquivo `app.py` util
 python app.py
 ```
 
-Abra outro terminal na raiz do projeto e execute:
+Abra outro terminal na raiz do projeto e execute o tailwind:
 
 ```bash
 npm run dev
