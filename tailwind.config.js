@@ -4,11 +4,12 @@ export default {
     theme: {
         extend: {
             colors: {
-                roxo: "#422ed2",
+                roxo: "#4f43cd",
                 bg1: "#314158",
                 bg2: "#1d2a3d",
                 navbar: "#0f172a",
                 bgborder: "#2e3641",
+                readonly: "#253449",
             },
         },
     },

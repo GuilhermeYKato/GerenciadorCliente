@@ -117,7 +117,7 @@
                 <!-- Menu / UseCloud / Icon -->
                 <div class="flex items-center gap-4">
                     <!-- Menu -->
-                    <button class="text-roxo hover:text-white text-2xl">☰</button>
+                    <button><i class="fa-solid fa-bars text-roxo text-xl  hover:text-white pt-1.5"></i></button>
 
                     <!-- Name/Icon -->
                     <span class="font-bold text-2xl text-roxo">UseCloud <span
@@ -128,13 +128,14 @@
                 <div class="flex items-center gap-3">
 
                     <!-- Database -->
-                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis">
+                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis font-semibold">
                         <option>Dev Cloud</option>
                         <option>Produção</option>
                     </select>
 
                     <!-- Nome Empresa -->
-                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis uppercase">
+                    <select
+                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase">
                         <option>Empresa Exemplo 1</option>
                         <option>Empresa Exemplo 2</option>
                         <option>Empresa Exemplo 3</option>
@@ -170,13 +171,14 @@
 
         <!-- Main Component-->
         <div class="bg-bg2 flex-1 rounded-b-md">
+            <!-- Main Component max-w-80% -->
             <div class="max-w-8/10 mx-auto">
-
+                <!-- States -->
                 <div x-data="{ state: 'list' }" class="p-2">
 
                     <!-- State 1: Lista de Clientes -->
-                    <div x-show="state === 'list'" class="mt-8">
-                        <div class="mb-6">
+                    <div x-show="state === 'list'" class="p-2 mt-8">
+                        <div class="flex mb-6 items-center">
                             <i class="fa-solid fa-users text-roxo text-2xl"></i>
                             <h1 class="text-3xl font-bold inline-block ml-2 text-white">Gerenciamento de Clientes</h1>
                         </div>
@@ -239,8 +241,11 @@
                                             <tr class="hover:bg-bgborder ">
                                                 <td class="p-4 truncate font-semibold" x-text="list_clients.codigo">
                                                 </td>
-                                                <td class="p-4 truncate uppercase font-semibold"
-                                                    x-text="list_clients.nome"></td>
+                                                <td
+                                                    class="p-4 truncate uppercase font-semibold flex items-center gap-2">
+                                                    <i class="fa-regular fa-circle-user text-roxo text-md"></i>
+                                                    <span x-text="list_clients.nome"></span>
+                                                </td>
                                                 <td class="p-4 truncate font-semibold" x-text="list_clients.documento">
                                                 </td>
                                                 <td class="p-4 truncate font-semibold" x-text="list_clients.email"></td>
@@ -292,22 +297,319 @@
                     </div>
 
                     <!-- State 2: Novo Cliente -->
-                    <div x-show="state === 'new'" class="mt-6">
+                    <div x-show="state === 'new'" class="p-2 mt-8">
+                        <!-- Titulo/botão -->
+                        <div class="flex justify-between mb-6">
 
-                        <button @click="state = 'list'" class="text-gray-600 underline mb-4">
-                            ← Voltar
-                        </button>
+
+                            <div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-users text-roxo text-2xl"></i>
+                                    <h1 class="text-3xl font-bold inline-block ml-2 text-white">Gerenciamento de
+                                        Clientes
+                                    </h1>
+                                </div>
+                            </div>
+
+                            <button @click="state = 'list'"
+                                class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded shadow flex items-center gap-2 text-md">
+                                <i class="fa-solid fa-arrow-left"></i> Voltar aos Clientes
+                            </button>
+                        </div>
+                        <!-- Titulo/botão END-->
+
+                        <!-- Identificação -->
+                        <div class="mb-6">
+
+                            <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                <i class="fa-regular fa-user text-roxo"></i>
+                                <h2 class="font-semibold text-lg">Identificação</h2>
+                            </div>
+
+                            <!-- Grid -->
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 text-left">
+
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Código</label>
+                                    <input type="text" value="108384" readonly
+                                        class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed font-semibold">
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Pessoa</label>
+                                    <select class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm font-semibold">
+                                        <option>Jurídica</option>
+                                        <option>Física</option>
+                                    </select>
+                                </div>
+
+                                <div class="lg:col-span-3">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Tipo</label>
+                                    <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm font-semibold">
+                                        <option>VENDAS</option>
+                                        <option>SERVIÇOS</option>
+                                    </select>
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">CNPJ</label>
+                                    <div>
+                                        <input type="text" value="42.506.289/0001-65"
+                                            class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm pr-8 font-semibold">
+                                        <i
+                                            class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-roxo cursor-pointer hover:text-gray-300"></i>
+                                    </div>
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">CPF</label>
+                                    <input type="text" placeholder="CPF" readonly
+                                        class="w-full bg-readonly text-gray-300  placeholder-gray-500 rounded p-2 text-sm font-semibold cursor-not-allowed">
+                                </div>
+
+                                <div class="lg:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Inscrição Estadual</label>
+                                    <input type="text" value="9089827202"
+                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm font-semibold">
+                                </div>
+
+                                <div class="lg:col-span-6">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Razão Social</label>
+                                    <input type="text" value="MARCELO DE OLIVEIRA SANTOS SOFTWARE LTDA"
+                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm uppercase font-semibold">
+                                </div>
+
+                                <div class="lg:col-span-6">
+                                    <label class="block text-xs font-bold text-gray-300 mb-2">Nome Fantasia</label>
+                                    <input type="text" value="USE SISTEMAS"
+                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm uppercase font-semibold">
+                                </div>
+
+                            </div>
+                            <!-- Grid -->
+
+                        </div>
+                        <!-- Identificação END -->
+
+                        <div class="border-t border-bg1 my-8 shadow-md"></div>
+
+                        <!-- Contato e Localização/Configurações Fiscais Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Contato e Localização-->
+                            <div>
+                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                    <i class="fa-solid fa-map-location-dot text-roxo"></i>
+                                    <h2 class="font-semibold text-lg">Contato e Localização</h2>
+                                </div>
+
+                                <div class="grid grid-cols-12 gap-4 text-left font-semibold">
+
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Telefone</label>
+                                        <input type="text" value="(43)9955-2100"
+                                            class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Fax</label>
+                                        <input type="text" placeholder="FAX" readonly
+                                            class="w-full bg-readonly text-gray-500 rounded p-2 text-sm placeholder-gray-500 cursor-not-allowed">
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Região</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
+                                            <option>Sudeste</option>
+                                            <option>Sul</option>
+                                            <option>Norte</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">E-mail
+                                            NFE/Boletos</label>
+                                        <input type="text" value="comercial@usesistemas.com.br"
+                                            class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-6">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Indicação</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-6">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Ramo/Profissão</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option></option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Contato e Localização END-->
+
+                            <!-- Configurações Fiscais-->
+                            <div class="font-semibold">
+                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                    <i class="fa-solid fa-file-invoice-dollar text-roxo"></i>
+                                    <h2 class="font-semibold text-lg">Configurações Fiscais</h2>
+                                </div>
+                                <!-- GRID -->
+                                <div class="grid grid-cols-12 gap-4 text-left">
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Indicador de
+                                            IE</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
+                                            <option>Contribuinte ICMS (informar a IE do destinatário)</option>
+                                            <option>Contribuinte Isento</option>
+                                            <option>Não Contribuinte</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-8">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Regime
+                                            Tributário</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
+                                            <option>SIMPLES NACIONAL</option>
+                                            <option>LUCRO REAL</option>
+                                            <option>LUCRO PRESUMIDO</option>
+                                            <option>MEI</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">ID Estrangeiro</label>
+                                        <input type="text" placeholder="ID ESTRANGEIRO" readonly
+                                            class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed">
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Redespacho</label>
+                                        <input type="text" placeholder="REDESPACHO" readonly
+                                            class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed">
+                                    </div>
+
+                                </div>
+                                <!-- GRID END-->
+
+                            </div>
+                            <!-- Configurações Fiscais END-->
+                        </div>
+                        <!-- Contato e Localização/Configurações Fiscais Grid END-->
+
+                        <div class="border-t border-bg1 my-8 shadow-md"></div>
+
+                        <!-- Configurações de Pedido/Complemento Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                            <!-- Configurações de Pedido -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                    <i class="fa-solid fa-cart-shopping text-roxo"></i>
+                                    <h2 class="font-semibold text-lg">Configurações de Pedido</h2>
+                                </div>
+
+                                <div class="grid grid-cols-12 gap-4 text-left">
+
+                                    <div class="col-span-8 lg:col-span-9">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Tabela de
+                                            Preço</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-4 lg:col-span-3">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">% Desc</label>
+                                        <input type="text" placeholder="% DESC"
+                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-6">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Limite de
+                                            Crédito</label>
+                                        <input type="text" placeholder="LIMITE DE CRÉDITO"
+                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500 cursor-not-allowed">
+                                    </div>
+
+                                    <div class="col-span-12 lg:col-span-6">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Crédito
+                                            Liberado</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option>SIM</option>
+                                            <option>NÃO</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Observações</label>
+                                        <input type="text" placeholder="OBSERVAÇÕES"
+                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Configurações de Pedido END -->
+                            <!-- Complemento -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                    <i class="fa-solid fa-bars text-roxo"></i>
+                                    <h2 class="font-semibold text-lg">Complemento</h2>
+                                </div>
+
+                                <!-- GRID -->
+                                <div class="grid grid-cols-12 gap-4 text-left">
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Fornecedor</label>
+                                        <div>
+                                            <select
+                                                class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm appearance-none">
+                                                <option>Nenhum Selecionado</option>
+                                                <option>Fornecedor A</option>
+                                            </select>
+                                            <i
+                                                class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-roxo pointer-events-none"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Transportadora</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-8 lg:col-span-9">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Grupo
+                                            Financeiro</label>
+                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                            <option></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-span-4 lg:col-span-3">
+                                        <label class="block text-xs font-bold text-gray-300 mb-2">Cód Reduzido</label>
+                                        <input type="text" placeholder="CÓD REDUZIDO"
+                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                    </div>
+
+                                </div>
+                                <!-- GRID END-->
+                            </div>
+                            <!-- Complemento END -->
+                        </div>
+                        <!-- Configurações de Pedido/Complemento Grid END-->
                     </div>
                     <!-- State 2: Novo Cliente END-->
-
                 </div>
+                <!-- States END-->
             </div>
-
-
-
+            <!-- Main Component max-w-80% END -->
         </div>
-        <!-- Main Component END-->
-
+        <!-- Main Component END -->
     </div>
     <!-- border END-->
 </body>
