@@ -111,14 +111,14 @@
     <div class="m-2 flex flex-col h-full">
 
         <!-- Nav Bar -->
-        <nav class="bg-navbar shadow-gray-900 shadow-md z-2 p-2 border-b border-bg1 rounded-t-md">
-            <div class="max-w-8/10 mx-auto flex justify-between items-center">
+        <nav class="bg-navbar shadow-gray-900 shadow-md z-10 p-2 border-b border-bg1 rounded-t-md">
+            <div class="max-w-4/5 mx-auto flex justify-between items-center">
 
                 <!-- Menu / UseCloud / Icon -->
                 <div class="flex items-center gap-4">
                     <!-- Menu -->
                     <button><i
-                            class="fa-solid fa-bars text-roxo text-xl  hover:text-white pt-1.5 hover:cursor-pointer"></i></button>
+                            class="fa-solid fa-bars text-roxo text-xl  hover:text-white pt-1.5 cursor-pointer"></i></button>
 
                     <!-- Name/Icon -->
                     <span class="font-bold text-2xl text-roxo">UseCloud <span
@@ -130,14 +130,14 @@
 
                     <!-- Database -->
                     <select
-                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis font-semibold hover:cursor-pointer">
+                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis font-semibold cursor-pointer">
                         <option>Dev Cloud</option>
                         <option>Produção</option>
                     </select>
 
                     <!-- Nome Empresa -->
                     <select
-                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase hover:cursor-pointer">
+                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase cursor-pointer">
                         <option>Empresa Exemplo 1</option>
                         <option>Empresa Exemplo 2</option>
                         <option>Empresa Exemplo 3</option>
@@ -147,7 +147,7 @@
 
                 <!-- Right profile menu -->
                 <div class="relative group">
-                    <button class="flex items-center gap-2 hover:opacity-80 hover:cursor-pointer">
+                    <button class="flex items-center gap-2 hover:opacity-80 cursor-pointer">
                         <img src="../src/icons/user.png" class="w-10 h-10 rounded-full border border-roxo" />
                         <div class="text-left text-sm">
                             <p class="text-gray-300 font-semibold">Olá, Usuário.</p>
@@ -159,12 +159,12 @@
                     <!-- Dropdown -->
                     <div class="absolute rounded-md bg-gray-300 group-hover:opacity-100  hidden group-hover:block">
                         <ul class="py-2 text-sm">
-                            <li><a href="#" class="block px-4 py-2 hover:text-roxo hover:cursor-pointer">Meu Perfil</a>
+                            <li><a href="#" class="block px-4 py-2 hover:text-roxo cursor-pointer">Meu Perfil</a>
+                            </li>
+                            <li><a href="#" class="block px-4 py-2 hover:text-roxo cursor-pointer">Configurações</a>
                             </li>
                             <li><a href="#"
-                                    class="block px-4 py-2 hover:text-roxo hover:cursor-pointer">Configurações</a></li>
-                            <li><a href="#"
-                                    class="block px-4 py-2 text-red-400 hover:text-red-900 hover:cursor-pointer">Sair</a>
+                                    class="block px-4 py-2 text-red-400 hover:text-red-900 cursor-pointer">Sair</a>
                             </li>
                         </ul>
                     </div>
@@ -178,7 +178,7 @@
         <!-- Main Component-->
         <div x-data="CreateClient()" class="bg-bg2 flex-1 rounded-b-md">
             <!-- Main Component max-w-80% -->
-            <div class="max-w-8/10 mx-auto">
+            <div class="max-w-4/5 mx-auto">
                 <!-- States -->
                 <div x-data="{ state: 'list' }" class="p-2">
 
@@ -211,7 +211,7 @@
 
                                 <!-- Button Novo Cliente -->
                                 <button @click="state = 'new'"
-                                    class="group bg-roxo text-gray-300 rounded-full flex hover:w-36 items-center shadow-lg hover:cursor-pointer">
+                                    class="group bg-roxo text-gray-300 rounded-full flex hover:w-36 items-center shadow-lg cursor-pointer">
                                     <span class="text-2xl flex items-center justify-center min-w-10 min-h-10 pb-1.5">
                                         +
                                     </span>
@@ -233,33 +233,33 @@
                                 <table class="w-full text-left table-fixed rounded-xl ">
                                     <tbody class="text-xs text-gray-300  bg-navbar">
                                         <tr class="uppercase border-2 border-bg1 ">
-                                            <th class="p-4 font-semibold w-8/100 rounded-tl-xl">Código</th>
-                                            <th class="p-4 font-semibold w-35/100">Nome</th>
-                                            <th class="p-4 font-semibold w-15/100">CPF/CNPJ</th>
-                                            <th class="p-4 font-semibold w-23/100">Email</th>
-                                            <th class="p-4 font-semibold w-10/100">Telefone</th>
-                                            <th class="p-4 font-semibold text-center w-9/100 rounded-tr-xl">Ações</th>
+                                            <th class="p-4 font-semibold w-[10%] rounded-tl-xl">Código</th>
+                                            <th class="p-4 font-semibold w-[35%]">Nome</th>
+                                            <th class="p-4 font-semibold w-[15%]">CPF/CNPJ</th>
+                                            <th class="p-4 font-semibold w-[20%]">Email</th>
+                                            <th class="p-4 font-semibold w-[10%]">Telefone</th>
+                                            <th class="p-4 font-semibold text-center w-[10%] rounded-tr-xl">Ações</th>
                                         </tr>
                                     </tbody>
 
                                     <tbody class="text-md text-gray-300">
-                                        <template x-for="list_clients in ClientPages" :key="list_clients.codigo">
+                                        <template x-for="client in ClientPages" :key="client.codigo">
                                             <tr class="hover:bg-bgborder ">
-                                                <td class="p-4 truncate font-semibold" x-text="list_clients.codigo">
+                                                <td class="p-4 truncate font-semibold" x-text="client.codigo">
                                                 </td>
                                                 <td
                                                     class="p-4 truncate uppercase font-semibold flex items-center gap-2">
                                                     <i class="fa-regular fa-circle-user text-roxo text-md"></i>
-                                                    <span x-text="list_clients.nome"></span>
+                                                    <span x-text="client.nome"></span>
                                                 </td>
-                                                <td class="p-4 truncate font-semibold" x-text="list_clients.documento">
+                                                <td class="p-4 truncate font-semibold" x-text="client.documento">
                                                 </td>
-                                                <td class="p-4 truncate font-semibold" x-text="list_clients.email"></td>
-                                                <td class="p-4 truncate font-semibold" x-text="list_clients.telefone">
+                                                <td class="p-4 truncate font-semibold" x-text="client.email"></td>
+                                                <td class="p-4 truncate font-semibold" x-text="client.telefone">
                                                 </td>
                                                 <td class="text-center">
                                                     <button
-                                                        class="bg-roxo text-[16px] font-semibold px-2 py-0.5 rounded-sm hover:bg-gray-500 hover:cursor-pointer">
+                                                        class="bg-roxo text-[16px] font-semibold px-2 py-0.5 rounded-sm hover:bg-gray-500 cursor-pointer">
                                                         Visualizar
                                                     </button>
                                                 </td>
@@ -274,7 +274,7 @@
                             <div class="flex justify-end mt-4 gap-2 font-semibold">
 
                                 <button @click="prevPage" :disabled="page === 1"
-                                    class="text-md px-3 h-8 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 hover:cursor-pointer">
+                                    class="text-md px-3 h-8 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 cursor-pointer">
                                     Anterior
                                 </button>
 
@@ -282,7 +282,7 @@
 
 
                                     <button @click="gotoPage(item)"
-                                        class="text-md w-8 h-8 rounded flex items-center justify-center hover:cursor-pointer"
+                                        class="text-md w-8 h-8 rounded flex items-center justify-center cursor-pointer"
                                         :class="page === item ? 'bg-roxo text-gray-300 shadow-lg' : 'bg-bg1 text-gray-300 hover:bg-gray-600'">
                                         <span x-text="item"></span>
                                     </button>
@@ -291,7 +291,7 @@
                                 </template>
 
                                 <button @click="nextPage" :disabled="page === totalPages"
-                                    class="text-md px-3 h-8 rounded bg-bg1 text-gray-300 hover:bg-gray-600 disabled:opacity-50 hover:cursor-pointer">
+                                    class="text-md px-3 h-8 rounded bg-bg1 text-gray-300 hover:bg-gray-600 disabled:opacity-50 cursor-pointer">
                                     Próxima
                                 </button>
 
@@ -318,7 +318,7 @@
                             </div>
 
                             <button @click="state = 'list'"
-                                class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded shadow flex items-center gap-2 text-md hover:cursor-pointer">
+                                class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded shadow flex items-center gap-2 text-md cursor-pointer">
                                 <i class="fa-solid fa-arrow-left"></i> Voltar aos Clientes
                             </button>
                         </div>
@@ -343,7 +343,7 @@
                                 <div class="lg:col-span-2">
                                     <label class="label-padrao">Pessoa</label>
                                     <div class="relative">
-                                        <select class="input-padrao hover:cursor-pointer">
+                                        <select class="input-padrao cursor-pointer">
                                             <option>Jurídica</option>
                                             <option>Física</option>
                                         </select>
@@ -356,7 +356,7 @@
                                 <div class="lg:col-span-3">
                                     <label class="label-padrao">Tipo</label>
                                     <div class="relative">
-                                        <select class="input-padrao hover:cursor-pointer">
+                                        <select class="input-padrao cursor-pointer">
                                             <option>VENDAS</option>
                                             <option>SERVIÇOS</option>
                                         </select>
@@ -429,7 +429,7 @@
                                     <div class="col-span-12 lg:col-span-4">
                                         <label class="label-padrao">Região</label>
                                         <div class="relative">
-                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                            <select class="input-padrao uppercase cursor-pointer">
                                                 <option>Sudeste</option>
                                                 <option>Sul</option>
                                                 <option>Norte</option>
@@ -450,7 +450,7 @@
                                     <div class="col-span-12 lg:col-span-6">
                                         <label class="label-padrao">Indicação</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option></option>
                                             </select>
                                             <div class="angle-down">
@@ -463,7 +463,7 @@
                                     <div class="col-span-12 lg:col-span-6">
                                         <label class="label-padrao">Ramo/Profissão</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option></option>
                                             </select>
                                             <div class="angle-down">
@@ -489,7 +489,7 @@
                                         <label class="label-padrao">Indicador de
                                             IE</label>
                                         <div class="relative">
-                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                            <select class="input-padrao uppercase cursor-pointer">
                                                 <option>Contribuinte ICMS (informar a IE do destinatário)</option>
                                                 <option>Contribuinte Isento</option>
                                                 <option>Não Contribuinte</option>
@@ -505,7 +505,7 @@
                                         <label class="label-padrao">Regime
                                             Tributário</label>
                                         <div class="relative">
-                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                            <select class="input-padrao uppercase cursor-pointer">
                                                 <option>SIMPLES NACIONAL</option>
                                                 <option>LUCRO REAL</option>
                                                 <option>LUCRO PRESUMIDO</option>
@@ -553,7 +553,7 @@
                                         <label class="label-padrao">Tabela de
                                             Preço</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option></option>
                                             </select>
                                             <div class="angle-down">
@@ -579,7 +579,7 @@
                                         <label class="label-padrao">Crédito
                                             Liberado</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option>SIM</option>
                                                 <option>NÃO</option>
                                             </select>
@@ -611,7 +611,7 @@
                                     <div class="col-span-12">
                                         <label class="label-padrao">Fornecedor</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option>Nenhum Selecionado</option>
                                                 <option>Fornecedor A</option>
                                             </select>
@@ -630,7 +630,7 @@
                                     <div class="col-span-12">
                                         <label class="label-padrao">Transportadora</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option></option>
                                             </select>
                                             <div class="angle-down">
@@ -644,7 +644,7 @@
                                         <label class="label-padrao">Grupo
                                             Financeiro</label>
                                         <div class="relative">
-                                            <select class="input-padrao hover:cursor-pointer">
+                                            <select class="input-padrao cursor-pointer">
                                                 <option></option>
                                             </select>
                                             <div class="angle-down">
@@ -674,7 +674,7 @@
                             </div>
 
                             <button @click="showContactModal = true"
-                                class="bg-roxo hover:bg-gray-500 text-white px-4 py-2 rounded shadow flex items-center gap-2 transition-all hover:cursor-pointer">
+                                class="bg-roxo hover:bg-gray-500 text-white px-4 py-2 rounded shadow flex items-center gap-2 transition-all cursor-pointer">
                                 <i class="fa-solid fa-plus"></i> Novo Contato
                             </button>
                         </div>
@@ -690,7 +690,7 @@
                                         <i class="fa-solid fa-phone text-roxo text-md"></i> Contato do Cliente
                                     </h3>
                                     <button @click="showContactModal = false"
-                                        class="text-gray-400 hover:cursor-pointer transition-colors">
+                                        class="text-gray-400 cursor-pointer transition-colors">
                                         <i class="fa-solid fa-xmark text-xl"></i>
                                     </button>
                                 </div>
@@ -752,11 +752,11 @@
 
                                 <div class="flex justify-end mt-8 pt-4 gap-3">
                                     <button @click="showContactModal = false"
-                                        class="bg-roxo hover:bg-gray-500 text-white px-6 py-2 rounded shadow font-semibold hover:cursor-pointer">
+                                        class="bg-roxo hover:bg-gray-500 text-white px-6 py-2 rounded shadow font-semibold cursor-pointer">
                                         Salvar
                                     </button>
                                     <button @click="showContactModal = false"
-                                        class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-6 py-2 rounded shadow font-semibold hover:cursor-pointer">
+                                        class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-6 py-2 rounded shadow font-semibold cursor-pointer">
                                         Cancelar
                                     </button>
                                 </div>
