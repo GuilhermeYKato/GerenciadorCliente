@@ -21,7 +21,7 @@
             return {
                 list_clients: [],
                 numClintes: 1000,
-
+                showContactModal: false,
                 createData() {
                     let list = [];
 
@@ -111,13 +111,14 @@
     <div class="m-2 flex flex-col h-full">
 
         <!-- Nav Bar -->
-        <nav class="bg-navbar shadow-gray-900 shadow-md z-1 p-2 border-b border-bg1 rounded-t-md">
+        <nav class="bg-navbar shadow-gray-900 shadow-md z-2 p-2 border-b border-bg1 rounded-t-md">
             <div class="max-w-8/10 mx-auto flex justify-between items-center">
 
                 <!-- Menu / UseCloud / Icon -->
                 <div class="flex items-center gap-4">
                     <!-- Menu -->
-                    <button><i class="fa-solid fa-bars text-roxo text-xl  hover:text-white pt-1.5"></i></button>
+                    <button><i
+                            class="fa-solid fa-bars text-roxo text-xl  hover:text-white pt-1.5 hover:cursor-pointer"></i></button>
 
                     <!-- Name/Icon -->
                     <span class="font-bold text-2xl text-roxo">UseCloud <span
@@ -125,17 +126,18 @@
                 </div>
 
                 <!-- Dropdown -->
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 relative">
 
                     <!-- Database -->
-                    <select class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis font-semibold">
+                    <select
+                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-32 text-ellipsis font-semibold hover:cursor-pointer">
                         <option>Dev Cloud</option>
                         <option>Produção</option>
                     </select>
 
                     <!-- Nome Empresa -->
                     <select
-                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase">
+                        class="bg-bg1 text-gray-200 px-3 py-2 rounded-md text-sm w-96 text-ellipsis font-semibold uppercase hover:cursor-pointer">
                         <option>Empresa Exemplo 1</option>
                         <option>Empresa Exemplo 2</option>
                         <option>Empresa Exemplo 3</option>
@@ -145,7 +147,7 @@
 
                 <!-- Right profile menu -->
                 <div class="relative group">
-                    <button class="flex items-center gap-2 hover:opacity-80">
+                    <button class="flex items-center gap-2 hover:opacity-80 hover:cursor-pointer">
                         <img src="../src/icons/user.png" class="w-10 h-10 rounded-full border border-roxo" />
                         <div class="text-left text-sm">
                             <p class="text-gray-300 font-semibold">Olá, Usuário.</p>
@@ -157,9 +159,13 @@
                     <!-- Dropdown -->
                     <div class="absolute rounded-md bg-gray-300 group-hover:opacity-100  hidden group-hover:block">
                         <ul class="py-2 text-sm">
-                            <li><a href="#" class="block px-4 py-2 hover:text-roxo">Meu Perfil</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:text-roxo">Configurações</a></li>
-                            <li><a href="#" class="block px-4 py-2 text-red-400 hover:text-red-900 ">Sair</a></li>
+                            <li><a href="#" class="block px-4 py-2 hover:text-roxo hover:cursor-pointer">Meu Perfil</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:text-roxo hover:cursor-pointer">Configurações</a></li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 text-red-400 hover:text-red-900 hover:cursor-pointer">Sair</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -170,7 +176,7 @@
         <!-- Nav Bar END-->
 
         <!-- Main Component-->
-        <div class="bg-bg2 flex-1 rounded-b-md">
+        <div x-data="CreateClient()" class="bg-bg2 flex-1 rounded-b-md">
             <!-- Main Component max-w-80% -->
             <div class="max-w-8/10 mx-auto">
                 <!-- States -->
@@ -205,12 +211,12 @@
 
                                 <!-- Button Novo Cliente -->
                                 <button @click="state = 'new'"
-                                    class="group bg-roxo w-10 h-10 text-gray-300 rounded-full flex hover:w-36 transition-all duration-300 items-center overflow-hidden shadow-lg">
-                                    <span class="text-2xl flex items-center justify-center w-10 h-10 pb-1.5">
+                                    class="group bg-roxo text-gray-300 rounded-full flex hover:w-36 items-center shadow-lg hover:cursor-pointer">
+                                    <span class="text-2xl flex items-center justify-center min-w-10 min-h-10 pb-1.5">
                                         +
                                     </span>
                                     <span
-                                        class="opacity-0 group-hover:opacity-100 max-w-0 group-hover:max-w-xs transition-all duration-300 overflow-hidden whitespace-nowrap">
+                                        class="opacity-0 group-hover:opacity-100 max-w-0 group-hover:max-w-xs transition-all duration-200 overflow-hidden whitespace-nowrap">
                                         Novo Cliente
                                     </span>
                                 </button>
@@ -220,7 +226,7 @@
                         </div>
 
                         <!-- Tabela Dados-->
-                        <div x-data="CreateClient()" class="mt-8">
+                        <div class="mt-8">
 
                             <!-- Tabela -->
                             <div class="bg-bg1 rounded-xl shadow-lg overflow-hidden">
@@ -253,7 +259,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <button
-                                                        class="bg-roxo text-[16px] font-semibold px-2 py-0.5 rounded-sm hover:bg-gray-500">
+                                                        class="bg-roxo text-[16px] font-semibold px-2 py-0.5 rounded-sm hover:bg-gray-500 hover:cursor-pointer">
                                                         Visualizar
                                                     </button>
                                                 </td>
@@ -268,7 +274,7 @@
                             <div class="flex justify-end mt-4 gap-2 font-semibold">
 
                                 <button @click="prevPage" :disabled="page === 1"
-                                    class="text-md px-3 h-8 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50">
+                                    class="text-md px-3 h-8 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 hover:cursor-pointer">
                                     Anterior
                                 </button>
 
@@ -276,7 +282,7 @@
 
 
                                     <button @click="gotoPage(item)"
-                                        class="text-md w-8 h-8 rounded flex items-center justify-center"
+                                        class="text-md w-8 h-8 rounded flex items-center justify-center hover:cursor-pointer"
                                         :class="page === item ? 'bg-roxo text-gray-300 shadow-lg' : 'bg-bg1 text-gray-300 hover:bg-gray-600'">
                                         <span x-text="item"></span>
                                     </button>
@@ -285,7 +291,7 @@
                                 </template>
 
                                 <button @click="nextPage" :disabled="page === totalPages"
-                                    class="text-md px-3 h-8 rounded bg-bg1 text-gray-300 hover:bg-gray-600 disabled:opacity-50">
+                                    class="text-md px-3 h-8 rounded bg-bg1 text-gray-300 hover:bg-gray-600 disabled:opacity-50 hover:cursor-pointer">
                                     Próxima
                                 </button>
 
@@ -312,7 +318,7 @@
                             </div>
 
                             <button @click="state = 'list'"
-                                class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded shadow flex items-center gap-2 text-md">
+                                class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded shadow flex items-center gap-2 text-md hover:cursor-pointer">
                                 <i class="fa-solid fa-arrow-left"></i> Voltar aos Clientes
                             </button>
                         </div>
@@ -321,7 +327,7 @@
                         <!-- Identificação -->
                         <div class="mb-6">
 
-                            <div class="flex items-center gap-2 mb-4 text-gray-300">
+                            <div class="class-new-client">
                                 <i class="fa-regular fa-user text-roxo"></i>
                                 <h2 class="font-semibold text-lg">Identificação</h2>
                             </div>
@@ -330,59 +336,64 @@
                             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 text-left">
 
                                 <div class="lg:col-span-1">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Código</label>
-                                    <input type="text" value="108384" readonly
-                                        class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed font-semibold">
+                                    <label class="label-padrao">Código</label>
+                                    <input type="text" value="108384" readonly class="input-readonly">
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Pessoa</label>
-                                    <select class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm font-semibold">
-                                        <option>Jurídica</option>
-                                        <option>Física</option>
-                                    </select>
+                                    <label class="label-padrao">Pessoa</label>
+                                    <div class="relative">
+                                        <select class="input-padrao hover:cursor-pointer">
+                                            <option>Jurídica</option>
+                                            <option>Física</option>
+                                        </select>
+                                        <div class="angle-down">
+                                            <i class="fa-solid fa-angle-down text-xs"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="lg:col-span-3">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Tipo</label>
-                                    <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm font-semibold">
-                                        <option>VENDAS</option>
-                                        <option>SERVIÇOS</option>
-                                    </select>
+                                    <label class="label-padrao">Tipo</label>
+                                    <div class="relative">
+                                        <select class="input-padrao hover:cursor-pointer">
+                                            <option>VENDAS</option>
+                                            <option>SERVIÇOS</option>
+                                        </select>
+                                        <div class="angle-down">
+                                            <i class="fa-solid fa-angle-down text-xs"></i>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">CNPJ</label>
-                                    <div>
-                                        <input type="text" value="42.506.289/0001-65"
-                                            class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm pr-8 font-semibold">
-                                        <i
-                                            class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-roxo cursor-pointer hover:text-gray-300"></i>
+                                    <label class="label-padrao">CNPJ</label>
+                                    <div class="relative">
+                                        <input type="text" value="42.506.289/0001-65" class="input-padrao pr-8">
+                                        <i class="fa-solid fa-magnifying-glass text-roxo absolute right-3 top-2.5"></i>
                                     </div>
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">CPF</label>
-                                    <input type="text" placeholder="CPF" readonly
-                                        class="w-full bg-readonly text-gray-300  placeholder-gray-500 rounded p-2 text-sm font-semibold cursor-not-allowed">
+                                    <label class="label-padrao">CPF</label>
+                                    <input type="text" placeholder="CPF" readonly class="input-readonly">
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Inscrição Estadual</label>
-                                    <input type="text" value="9089827202"
-                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm font-semibold">
+                                    <label class="label-padrao">Inscrição Estadual</label>
+                                    <input type="text" value="9089827202" class="input-padrao">
                                 </div>
 
                                 <div class="lg:col-span-6">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Razão Social</label>
+                                    <label class="label-padrao">Razão Social</label>
                                     <input type="text" value="MARCELO DE OLIVEIRA SANTOS SOFTWARE LTDA"
-                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm uppercase font-semibold">
+                                        class="input-padrao uppercase">
                                 </div>
 
                                 <div class="lg:col-span-6">
-                                    <label class="block text-xs font-bold text-gray-300 mb-2">Nome Fantasia</label>
-                                    <input type="text" value="USE SISTEMAS"
-                                        class="w-full bg-bg1  text-gray-300 rounded p-2 text-sm uppercase font-semibold">
+                                    <label class="label-padrao">Nome Fantasia</label>
+                                    <input type="text" value="USE SISTEMAS" class="input-padrao uppercase">
                                 </div>
 
                             </div>
@@ -397,53 +408,68 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <!-- Contato e Localização-->
                             <div>
-                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                <div class="class-new-client">
                                     <i class="fa-solid fa-map-location-dot text-roxo"></i>
                                     <h2 class="font-semibold text-lg">Contato e Localização</h2>
                                 </div>
 
-                                <div class="grid grid-cols-12 gap-4 text-left font-semibold">
+                                <div class="grid grid-cols-12 gap-4 text-left">
 
                                     <div class="col-span-12 lg:col-span-4">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Telefone</label>
-                                        <input type="text" value="(43)9955-2100"
-                                            class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                        <label class="label-padrao">Telefone</label>
+                                        <input type="text" value="(43)9955-2100" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-4">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Fax</label>
+                                        <label class="label-padrao">Fax</label>
                                         <input type="text" placeholder="FAX" readonly
                                             class="w-full bg-readonly text-gray-500 rounded p-2 text-sm placeholder-gray-500 cursor-not-allowed">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-4">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Região</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
-                                            <option>Sudeste</option>
-                                            <option>Sul</option>
-                                            <option>Norte</option>
-                                        </select>
+                                        <label class="label-padrao">Região</label>
+                                        <div class="relative">
+                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                                <option>Sudeste</option>
+                                                <option>Sul</option>
+                                                <option>Norte</option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">E-mail
+                                        <label class="label-padrao">E-mail
                                             NFE/Boletos</label>
-                                        <input type="text" value="comercial@usesistemas.com.br"
-                                            class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
+                                        <input type="text" value="comercial@usesistemas.com.br" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-6">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Indicação</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option></option>
-                                        </select>
+                                        <label class="label-padrao">Indicação</label>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option></option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-6">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Ramo/Profissão</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option></option>
-                                        </select>
+                                        <label class="label-padrao">Ramo/Profissão</label>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option></option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -451,8 +477,8 @@
                             <!-- Contato e Localização END-->
 
                             <!-- Configurações Fiscais-->
-                            <div class="font-semibold">
-                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                            <div>
+                                <div class="class-new-client">
                                     <i class="fa-solid fa-file-invoice-dollar text-roxo"></i>
                                     <h2 class="font-semibold text-lg">Configurações Fiscais</h2>
                                 </div>
@@ -460,36 +486,46 @@
                                 <div class="grid grid-cols-12 gap-4 text-left">
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Indicador de
+                                        <label class="label-padrao">Indicador de
                                             IE</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
-                                            <option>Contribuinte ICMS (informar a IE do destinatário)</option>
-                                            <option>Contribuinte Isento</option>
-                                            <option>Não Contribuinte</option>
-                                        </select>
+                                        <div class="relative">
+                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                                <option>Contribuinte ICMS (informar a IE do destinatário)</option>
+                                                <option>Contribuinte Isento</option>
+                                                <option>Não Contribuinte</option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-8">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Regime
+                                        <label class="label-padrao">Regime
                                             Tributário</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm uppercase">
-                                            <option>SIMPLES NACIONAL</option>
-                                            <option>LUCRO REAL</option>
-                                            <option>LUCRO PRESUMIDO</option>
-                                            <option>MEI</option>
-                                        </select>
+                                        <div class="relative">
+                                            <select class="input-padrao uppercase hover:cursor-pointer">
+                                                <option>SIMPLES NACIONAL</option>
+                                                <option>LUCRO REAL</option>
+                                                <option>LUCRO PRESUMIDO</option>
+                                                <option>MEI</option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-4">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">ID Estrangeiro</label>
-                                        <input type="text" placeholder="ID ESTRANGEIRO" readonly
-                                            class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed">
+                                        <label class="label-padrao">ID Estrangeiro</label>
+                                        <input type="text" placeholder="ID ESTRANGEIRO" readonly class="input-readonly">
                                     </div>
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Redespacho</label>
-                                        <input type="text" placeholder="REDESPACHO" readonly
-                                            class="w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed">
+                                        <label class="label-padrao">Redespacho</label>
+                                        <input type="text" placeholder="REDESPACHO" readonly class="input-readonly">
                                     </div>
 
                                 </div>
@@ -506,7 +542,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                             <!-- Configurações de Pedido -->
                             <div>
-                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                <div class="class-new-client">
                                     <i class="fa-solid fa-cart-shopping text-roxo"></i>
                                     <h2 class="font-semibold text-lg">Configurações de Pedido</h2>
                                 </div>
@@ -514,39 +550,49 @@
                                 <div class="grid grid-cols-12 gap-4 text-left">
 
                                     <div class="col-span-8 lg:col-span-9">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Tabela de
+                                        <label class="label-padrao">Tabela de
                                             Preço</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option></option>
-                                        </select>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option></option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
                                     <div class="col-span-4 lg:col-span-3">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">% Desc</label>
-                                        <input type="text" placeholder="% DESC"
-                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                        <label class="label-padrao">% Desc</label>
+                                        <input type="text" placeholder="% DESC" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-6">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Limite de
+                                        <label class="label-padrao">Limite de
                                             Crédito</label>
-                                        <input type="text" placeholder="LIMITE DE CRÉDITO"
-                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500 cursor-not-allowed">
+                                        <input type="text" placeholder="LIMITE DE CRÉDITO" class="input-padrao">
                                     </div>
 
                                     <div class="col-span-12 lg:col-span-6">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Crédito
+                                        <label class="label-padrao">Crédito
                                             Liberado</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option>SIM</option>
-                                            <option>NÃO</option>
-                                        </select>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option>SIM</option>
+                                                <option>NÃO</option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Observações</label>
-                                        <input type="text" placeholder="OBSERVAÇÕES"
-                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                        <label class="label-padrao">Observações</label>
+                                        <input type="text" placeholder="OBSERVAÇÕES" class="input-padrao">
                                     </div>
 
                                 </div>
@@ -554,7 +600,7 @@
                             <!-- Configurações de Pedido END -->
                             <!-- Complemento -->
                             <div>
-                                <div class="flex items-center gap-2 mb-4 text-gray-300">
+                                <div class="class-new-client">
                                     <i class="fa-solid fa-bars text-roxo"></i>
                                     <h2 class="font-semibold text-lg">Complemento</h2>
                                 </div>
@@ -563,37 +609,53 @@
                                 <div class="grid grid-cols-12 gap-4 text-left">
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Fornecedor</label>
-                                        <div>
-                                            <select
-                                                class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm appearance-none">
+                                        <label class="label-padrao">Fornecedor</label>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
                                                 <option>Nenhum Selecionado</option>
                                                 <option>Fornecedor A</option>
                                             </select>
+
+                                            <div
+                                                class="absolute inset-y-0 right-10 flex items-center px-2 text-gray-100 pointer-events-none">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+
                                             <i
-                                                class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-roxo pointer-events-none"></i>
+                                                class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-roxo pointer-events-none"></i>
+
                                         </div>
                                     </div>
 
                                     <div class="col-span-12">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Transportadora</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option></option>
-                                        </select>
+                                        <label class="label-padrao">Transportadora</label>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option></option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="col-span-8 lg:col-span-9">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Grupo
+                                        <label class="label-padrao">Grupo
                                             Financeiro</label>
-                                        <select class="w-full bg-bg1 text-gray-300 rounded p-2 text-sm">
-                                            <option></option>
-                                        </select>
+                                        <div class="relative">
+                                            <select class="input-padrao hover:cursor-pointer">
+                                                <option></option>
+                                            </select>
+                                            <div class="angle-down">
+                                                <i class="fa-solid fa-angle-down text-xs"></i>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-span-4 lg:col-span-3">
-                                        <label class="block text-xs font-bold text-gray-300 mb-2">Cód Reduzido</label>
-                                        <input type="text" placeholder="CÓD REDUZIDO"
-                                            class="w-full bg-bg1 text-gray-500 rounded p-2 text-sm placeholder-gray-500">
+                                        <label class="label-padrao">Cód Reduzido</label>
+                                        <input type="text" placeholder="CÓD REDUZIDO" class="input-padrao">
                                     </div>
 
                                 </div>
@@ -602,6 +664,107 @@
                             <!-- Complemento END -->
                         </div>
                         <!-- Configurações de Pedido/Complemento Grid END-->
+
+                        <div class="border-t border-bg1 my-8 shadow-md"></div>
+
+                        <div class="flex items-center justify-between">
+                            <div class="class-new-client">
+                                <i class="fa-solid fa-address-book text-roxo"></i>
+                                <h2 class="font-semibold text-lg">Contatos Adicionais</h2>
+                            </div>
+
+                            <button @click="showContactModal = true"
+                                class="bg-roxo hover:bg-gray-500 text-white px-4 py-2 rounded shadow flex items-center gap-2 transition-all hover:cursor-pointer">
+                                <i class="fa-solid fa-plus"></i> Novo Contato
+                            </button>
+                        </div>
+                        <!-- Modal -->
+                        <div x-show="showContactModal" x-transition.opacity
+                            class="fixed inset-0 bg-gray-600/60 backdrop-blur flex items-center justify-center z-2">
+
+                            <!-- Modal true -->
+                            <div @click.outside="showContactModal = false"
+                                class="bg-bg2 border border-gray-700 rounded-2xl shadow-2xl w-full max-w-2xl p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-phone text-roxo text-md"></i> Contato do Cliente
+                                    </h3>
+                                    <button @click="showContactModal = false"
+                                        class="text-gray-400 hover:cursor-pointer transition-colors">
+                                        <i class="fa-solid fa-xmark text-xl"></i>
+                                    </button>
+                                </div>
+
+                                <div class="space-y-4 text-left">
+                                    <label class="block text-xs font-bold text-gray-400 mb-2">Definições</label>
+                                    <div class="border border-bg1 p-4 rounded-md">
+
+                                        <div class="flex gap-4">
+                                            <label class="flex items-center gap-2 cursor-pointer">
+                                                <input type="checkbox" class="w-4 h-4 rounded">
+                                                <span class="text-md text-gray-300">Ativo</span>
+                                            </label>
+                                            <label class="flex items-center gap-2 cursor-pointer">
+                                                <input type="checkbox" class="w-4 h-4 rounded">
+                                                <span class="text-md text-gray-300">Principal</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-12 gap-4">
+                                        <div class="col-span-8">
+                                            <label class="label-padrao">Contato</label>
+                                            <input type="text" placeholder="CONTATO" class="input-padrao">
+                                        </div>
+                                        <div class="col-span-4">
+                                            <label class="label-padrao">Data de
+                                                Nascimento</label>
+                                            <div class="relative">
+                                                <input type="text" placeholder="DD / MM / AAAA" class="input-padrao">
+                                                <i
+                                                    class="fa-regular fa-calendar absolute right-3 top-2.5 text-roxo"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-12 gap-4">
+                                        <div class="col-span-6">
+                                            <label class="label-padrao">Telefone</label>
+                                            <input type="text" placeholder="TELEFONE" class="input-padrao">
+                                        </div>
+                                        <div class="col-span-6">
+                                            <label class="label-padrao">Celular</label>
+                                            <input type="text" placeholder="CELULAR" class="input-padrao">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="label-padrao">E-mail</label>
+                                        <input type="email" placeholder="E-mail" class="input-padrao">
+                                    </div>
+
+                                    <div>
+                                        <label class="label-padrao">Observações</label>
+                                        <input type="text" placeholder="OBSERVAÇÕES" class="input-padrao">
+                                    </div>
+
+                                </div>
+
+                                <div class="flex justify-end mt-8 pt-4 gap-3">
+                                    <button @click="showContactModal = false"
+                                        class="bg-roxo hover:bg-gray-500 text-white px-6 py-2 rounded shadow font-semibold hover:cursor-pointer">
+                                        Salvar
+                                    </button>
+                                    <button @click="showContactModal = false"
+                                        class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-6 py-2 rounded shadow font-semibold hover:cursor-pointer">
+                                        Cancelar
+                                    </button>
+                                </div>
+
+                            </div>
+                            <!-- Modal true END-->
+                        </div>
+                        <!-- Modal END-->
                     </div>
                     <!-- State 2: Novo Cliente END-->
                 </div>

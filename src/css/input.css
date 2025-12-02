@@ -1,3 +1,25 @@
 @import "tailwindcss";
 
 @config "../../tailwind.config.js";
+
+@layer components {
+    .label-padrao {
+        @apply block text-xs font-bold text-gray-300 mb-2;
+    }
+
+    .input-padrao {
+        @apply w-full bg-bg1 text-gray-300 rounded p-2 text-sm placeholder-gray-500 font-semibold appearance-none;
+    }
+
+    .input-readonly {
+        @apply w-full bg-readonly text-gray-300 placeholder-gray-500 rounded p-2 text-sm cursor-not-allowed font-semibold;
+    }
+
+    .class-new-client {
+        @apply flex items-center gap-2 mb-4 text-gray-300;
+    }
+
+    .angle-down {
+        @apply absolute inset-y-0 right-1 flex items-center px-2 text-gray-100 pointer-events-none;
+    }
+}
